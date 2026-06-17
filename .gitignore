@@ -1,0 +1,18 @@
+# Runtime stores — these hold the USER'S real Twos data. Never commit them.
+*-store/
+twos-sift-store/
+twos-prune-store/
+_livetest/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Generated bundles
+*.zip
