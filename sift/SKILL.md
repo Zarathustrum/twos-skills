@@ -24,8 +24,9 @@ walk, and the cross-out marking. The **only** model judgement is classifying eac
 list against the criterion — and that's deliberately cheap: title + a short
 `max_text:1` sample → a one-line verdict.
 
-State lives under `./twos-sift-store/` (override `TWOS_SIFT_STORE`). You save
-connector results to:
+State lives under `./twos-sift-store/` (override `TWOS_SIFT_STORE` — bash:
+`export TWOS_SIFT_STORE=…`; Windows cmd: `set TWOS_SIFT_STORE=…`; PowerShell:
+`$env:TWOS_SIFT_STORE = "…"`). You save connector results to:
 
 | You call | Save to |
 |---|---|

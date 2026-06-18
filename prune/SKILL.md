@@ -26,7 +26,9 @@ diffing, gating, and logging, and prints a short summary you read. For large
 file to the path below instead of pasting it into your reply.
 
 State + your saved results live under `./twos-prune-store/` (override with
-`TWOS_PRUNE_STORE`). You save connector results to these exact paths:
+`TWOS_PRUNE_STORE` — bash: `export TWOS_PRUNE_STORE=…`; Windows cmd: `set
+TWOS_PRUNE_STORE=…`; PowerShell: `$env:TWOS_PRUNE_STORE = "…"`). You save
+connector results to these exact paths:
 
 | You call | Save the raw JSON to |
 |---|---|

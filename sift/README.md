@@ -64,6 +64,14 @@ html/index.html + <bucket>.html  the browsable review surface
 remaining-to-assess.json the still-undecided lists (drives your next pass)
 ```
 
+To override the store location, set `TWOS_SIFT_STORE` for your shell:
+
+```bash
+export TWOS_SIFT_STORE=/path/to/store        # bash / zsh (macOS, Linux)
+set TWOS_SIFT_STORE=C:\path\to\store          # Windows cmd.exe
+$env:TWOS_SIFT_STORE = "C:\path\to\store"     # Windows PowerShell
+```
+
 ## Commands
 
 ```bash

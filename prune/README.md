@@ -74,6 +74,14 @@ deletion-log.json    audit trail (deleted / suspect-linked)
 dangling-refs.json   leftover pointers to deleted lists (optional cleanup)
 ```
 
+To override the store location, set `TWOS_PRUNE_STORE` for your shell:
+
+```bash
+export TWOS_PRUNE_STORE=/path/to/store        # bash / zsh (macOS, Linux)
+set TWOS_PRUNE_STORE=C:\path\to\store          # Windows cmd.exe
+$env:TWOS_PRUNE_STORE = "C:\path\to\store"     # Windows PowerShell
+```
+
 ## Commands (run by the assistant; you read summaries)
 
 ```bash
