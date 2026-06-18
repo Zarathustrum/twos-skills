@@ -51,6 +51,21 @@ connector results to these exact paths:
 
 ## Procedure
 
+0. **Model check (do this first).** Read your own model tier from your system
+   context. Pruner was tuned and tested on **Opus**, and it permanently deletes
+   lists. The hard gates (capture-before-delete, the backup gate, the canary) are
+   enforced in the script, so they hold on any model — but executing the steps in
+   order, saving each raw result to the right path, stopping on anomalies, and
+   confirming the closure with the user before deleting are the model's job. If you
+   cannot confirm you're an **Opus-tier** model (Sonnet, Haiku, or can't tell), say
+   this once, then continue by default:
+   > Heads-up: this skill permanently deletes lists and was tuned on Opus. Its
+   > code-enforced gates (capture-before-delete, backup, canary) hold on any model,
+   > but the careful step-by-step execution around them was tuned on Opus — on a
+   > smaller model, follow each confirmation closely, or switch to Opus for this
+   > run, since deletion is irreversible.
+
+   If you *are* Opus-tier, skip this silently — no message.
 1. **Master list.** Ask the user for the master "lists to prune" list (they create
    it in Twos and link the lists they want gone into it). Resolve its id with
    `search`/`list_lists`, then write `twos-prune-store/config.json`:

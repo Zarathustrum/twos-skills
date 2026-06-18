@@ -52,6 +52,18 @@ Write `twos-sift-store/config.json`:
 
 ## Procedure
 
+0. **Model check (do this first).** Read your own model tier from your system
+   context. Sift's one model step — the title classification — was tuned and tested
+   on **Opus**. If you cannot confirm you're an **Opus-tier** model (i.e. you're on
+   Sonnet, Haiku, or can't tell), say this to the user once, then continue by
+   default:
+   > Heads-up: Sift's classification was tuned on Opus. On a smaller model the
+   > candidate list comes out noisier — more mislabels to sort through. It's still
+   > safe (Sift never deletes; you review every list before twos-prune removes
+   > anything), just more review work. Switch to Opus for the tightest pass, or say
+   > "continue" to proceed as-is.
+
+   If you *are* Opus-tier, skip this silently — no message.
 1. **Enumerate.** Page `list_lists` until empty, saving each page to
    `raw/list_index/<page>.json`.
 2. **Prefilter (recommended — free, big token saver).** Propose a `prefilter.json`
