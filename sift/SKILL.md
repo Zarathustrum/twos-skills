@@ -53,17 +53,18 @@ Write `twos-sift-store/config.json`:
 ## Procedure
 
 0. **Model check (do this first).** Read your own model tier from your system
-   context. Sift's one model step — the title classification — was tuned and tested
-   on **Opus**. If you cannot confirm you're an **Opus-tier** model (i.e. you're on
-   Sonnet, Haiku, or can't tell), say this to the user once, then continue by
-   default:
-   > Heads-up: Sift's classification was tuned on Opus. On a smaller model the
-   > candidate list comes out noisier — more mislabels to sort through. It's still
-   > safe (Sift never deletes; you review every list before twos-prune removes
-   > anything), just more review work. Switch to Opus for the tightest pass, or say
-   > "continue" to proceed as-is.
+   context. Sift's one model step — the title classification — is tuned and tested
+   on **Opus and Sonnet** (they agree on clean criteria; on fuzzy ones Sonnet
+   actually hedges more faithfully to the wide-net rule). If you cannot confirm
+   you're on an **Opus- or Sonnet-tier** model (e.g. you're on Haiku or can't tell),
+   say this to the user once, then continue by default:
+   > Heads-up: Sift's classification is tested on Opus and Sonnet. On a smaller or
+   > unknown model the candidate list may come out noisier — more mislabels to sort
+   > through. It's still safe (Sift never deletes; you review every list before
+   > twos-prune removes anything), just more review work. Switch to Opus or Sonnet
+   > for a validated pass, or say "continue" to proceed as-is.
 
-   If you *are* Opus-tier, skip this silently — no message.
+   If you're on Opus or Sonnet, skip this silently — no message.
 1. **Enumerate.** Page `list_lists` until empty, saving each page to
    `raw/list_index/<page>.json`.
 2. **Prefilter (recommended — free, big token saver).** Propose a `prefilter.json`
@@ -77,8 +78,10 @@ Write `twos-sift-store/config.json`:
    residue.
 3. **Classify the residue.** `node scripts/sift.mjs classify-plan --cheap` — judge
    the remaining titles **from the title alone, in batches (~40/message)**, biasing
-   toward `match`/`uncertain` when unsure (false positives are fine — the user
-   reviews them). Write `raw/verdicts/<id>.json` per list. Don't call `get_list`.
+   toward `match`/`uncertain`: use `no-match` **only when the title gives a positive
+   reason it does NOT fit the criterion**; if it's vague or merely *might* fit, use
+   `uncertain`, never `no-match` (false positives are fine — the user reviews them).
+   Write `raw/verdicts/<id>.json` per list. Don't call `get_list`.
    - *Higher precision, higher cost:* drop `--cheap` to instead read a sample per
      list (`get_list({id, max_text:1})`) before judging. Use only when titles are
      too vague to sift on.

@@ -30,6 +30,22 @@ script's header comments document the expected file paths. A good smoke test:
 Keep fixtures synthetic — never commit real Twos data (the `.gitignore` excludes
 the `*-store/` dirs for this reason).
 
+## Classification regression (Sift)
+
+Sift's only model-driven step is the title→bucket classification. `sift/test/`
+pins its expected behaviour against golden fixtures so prompt or model changes are
+checkable. Feed a fixture's titles to the model with the `classify-plan --cheap`
+instruction, collect the verdicts, then grade:
+
+```bash
+node sift/test/score.mjs sift/test/fixtures/personal-private.json <verdicts>
+```
+
+A change to the classification prompt must keep `personal-private.json` at full
+within-accept with zero wide-net violations on every model you claim support for,
+and must not introduce wide-net violations on `throwaway-scratch.json`. See
+`sift/test/README.md`.
+
 ## Style
 
 - Plain Node ESM (v18+), no dependencies. Keep it that way unless there's a strong

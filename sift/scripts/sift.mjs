@@ -96,7 +96,7 @@ function classifyPlan() {
   console.log(`Account lists: ${idx.size} | already classified (cache+prefilter): ${done.size} | residue: ${need.length}`);
   if (!need.length) { console.log("Nothing left to classify. Run `ingest` then `build`."); return; }
   if (cheap) {
-    console.log(`Judge these ${need.length} from TITLE ALONE, in batches (~40/message). Bias toward match/uncertain when unsure (false positives are fine; the user reviews them). Do NOT call get_list. Write raw/verdicts/<id>.json {id,title,created,item_count:null,bucket,rationale}:`);
+    console.log(`Judge these ${need.length} from TITLE ALONE, in batches (~40/message). Bias toward match/uncertain: use no-match ONLY when the title gives a positive reason it does NOT fit the criterion; if vague or it merely might fit, use uncertain, never no-match (false positives are fine; the user reviews them). Do NOT call get_list. Write raw/verdicts/<id>.json {id,title,created,item_count:null,bucket,rationale}:`);
   } else {
     console.log(`Classify these ${need.length} — get_list({id,max_text:1}), judge vs criterion, write raw/verdicts/<id>.json:`);
   }
