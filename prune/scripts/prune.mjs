@@ -113,8 +113,10 @@ function capture() {
     const raw = loadRaw(id);
     const m = { ...meta(raw), id };
     const ts = things(raw);
-    const jsonRel = join("json", `${id}.json`);
-    const mdRel = join("md", `${slug(m.title)}-${id.slice(-6)}.md`);
+    // Forward-slash relative paths so the manifest is portable across OSes
+    // (identical to join() on posix; avoids backslashes on win32).
+    const jsonRel = `json/${id}.json`;
+    const mdRel = `md/${slug(m.title)}-${id.slice(-6)}.md`;
     writeJSON(p(jsonRel), { list: m, things: ts, reminders: raw?.reminders || [] });
     mkdirSync(dirname(p(mdRel)), { recursive: true });
     writeFileSync(p(mdRel), renderMd(m, ts));
@@ -230,10 +232,25 @@ function refs() {
 }
 
 // --- zip ---------------------------------------------------------------------
+// No npm deps, so we shell out to a platform-native archiver: the Unix `zip` on
+// posix; on Windows (no `zip`), bsdtar — `tar.exe`, bundled since Win10 1803 —
+// whose `-a` picks the zip format from the .zip suffix, falling back to
+// PowerShell's Compress-Archive. All three exclude any existing .zip.
 function zip() {
   const out = p(`twos-prune-store-${new Date().toISOString().slice(0, 10)}.zip`);
   if (existsSync(out)) rmSync(out);
-  execFileSync("zip", ["-r", "-q", out, ".", "-x", "*.zip"], { cwd: STORE });
+  if (process.platform === "win32") {
+    try {
+      execFileSync("tar", ["-a", "-c", "-f", out, "--exclude=*.zip", "."], { cwd: STORE });
+    } catch {
+      // out path passed via env var to dodge PowerShell quoting of spaces in paths.
+      execFileSync("powershell", ["-NoProfile", "-NonInteractive", "-Command",
+        "Get-ChildItem -LiteralPath . -Force | Where-Object Extension -ne '.zip' | Compress-Archive -DestinationPath $env:TWOS_ZIP_OUT -Force"],
+        { cwd: STORE, env: { ...process.env, TWOS_ZIP_OUT: out } });
+    }
+  } else {
+    execFileSync("zip", ["-r", "-q", out, ".", "-x", "*.zip"], { cwd: STORE });
+  }
   console.log(`Bundled -> ${out}`);
 }
 
