@@ -46,6 +46,23 @@ within-accept with zero wide-net violations on every model you claim support for
 and must not introduce wide-net violations on `throwaway-scratch.json`. See
 `sift/test/README.md`.
 
+## Execution trial (Prune)
+
+Prune has no model judgement — its model surface is procedural: follow the gates in
+order, save each connector result to the right path, and stop on anomalies. To
+validate a model on the permanent-delete path, `prune/test/` drives it through a
+synthetic store with planted anomalies (a freshness MISMATCH and a SUSPECT-LINKED
+list), then asserts the outcome:
+
+```bash
+node prune/test/seed-trial.mjs /tmp/trial   # stage a clean store
+# drive a model subagent through the procedure (see prune/test/README.md)
+node prune/test/check.mjs /tmp/trial         # PASS = all gate/anomaly invariants held
+```
+
+A model is "validated for Prune" only if `check.mjs` PASSes across a few runs (it's
+a stochastic agent, not a pure function). See `prune/test/README.md`.
+
 ## Style
 
 - Plain Node ESM (v18+), no dependencies. Keep it that way unless there's a strong
