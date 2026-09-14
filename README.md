@@ -1,6 +1,8 @@
-# Twos Skills — Sift & Prune
+# Twos Skills — Sift, Prune & Operator
 
-Two [Claude](https://claude.com/claude-code) skills that work together to clean up
+Skills for working on a [Twos](https://www.twosapp.com) account with an AI agent.
+
+**Sift** and **Prune** are two [Claude](https://claude.com/claude-code) skills that work together to clean up
 a [Twos](https://www.twosapp.com) account safely: **Sift** finds and helps you
 review lists by a criterion you describe; **Prune** backs the chosen ones up
 locally and permanently removes them. They run through the **claude.ai Twos
@@ -20,6 +22,14 @@ Prune: "Lists to prune" → capture (lossless backup) → verify → delete (gat
 | **[Prune](./prune)** | Walk the lists you queued, back each up losslessly (JSON + Markdown), verify, then delete — canary first, every removal verified and logged. | [`/prune`](./prune) |
 
 You can use them together (the usual flow) or independently.
+
+## Operator (experimental, Codex)
+
+| | What it does | Folder |
+|---|---|---|
+| **[Operator](./twos-operator)** | Edit and reorganize *within* lists — reorder, move a parent with its children, insert into an existing outline, tag, indent, header — through the Twos MCP connector plus a signed-in browser when the connector can't express the change. Preserves item identity. | [`/twos-operator`](./twos-operator) |
+
+Operator is a different kind of thing from Sift/Prune: a [Codex](https://developers.openai.com/codex) instruction skill with no scripts, which needs a **computer-use / browser tool** and a Chrome tab signed into `writethingsdown.com` for the UI recipes, and the **Twos MCP connector** for reads and simple writes. It was tested in one environment (macOS Chrome, desktop Codex, one account, 2026-09-13) and is labeled experimental. It never deletes. See its [README](./twos-operator/README.md) for prerequisites, evidence limits and install.
 
 ## Why it's safe
 
@@ -42,11 +52,13 @@ README for the honest cost details.
 
 ## Install
 
-These are Claude skills — each folder has a `SKILL.md`. Drop `sift/` and `prune/`
+**Sift and Prune** are Claude skills — each folder has a `SKILL.md`. Drop `sift/` and `prune/`
 into your Claude skills directory (or point your skills config at them), then ask
 Claude to *"sift my Twos lists"* or *"prune my Twos lists"*. You need the **Twos
 connector** enabled in claude.ai. The scripts are plain Node (v18+), no
 dependencies.
+
+**Operator** is a Codex skill; install it into a Codex skills directory instead — see [`twos-operator/README.md`](./twos-operator/README.md).
 
 ## Known limits & gotchas
 
@@ -64,7 +76,7 @@ dependencies.
 
 Issues and PRs welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md). The one rule:
 don't weaken the safety invariants (capture-before-delete, the backup gate,
-delete verification).
+delete verification). Operator changes must keep their evidence labels honest.
 
 ## License
 

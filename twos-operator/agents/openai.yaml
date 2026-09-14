@@ -1,0 +1,3 @@
+interface:
+  display_name: "Twos Operator"
+  short_description: "Operate Twos through Chrome and its MCP connector"

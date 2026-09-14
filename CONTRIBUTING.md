@@ -74,5 +74,13 @@ a stochastic agent, not a pure function). See `prune/test/README.md`.
 
 ## Scope
 
-These skills capture and remove lists. Merging, editing, or reorganizing lists is
-out of scope — propose those as separate tools.
+**Sift and Prune** capture and remove lists. Merging, editing, or reorganizing
+lists is out of scope for them — don't add it there.
+
+**Operator** (`twos-operator/`) is where editing and reorganizing live. It is an
+instruction-only Codex skill with no scripts and no delete path. When changing
+it, keep each recipe's evidence label (tested / settings-observed /
+documentation-derived) accurate, and don't promote an observed binding to
+"tested" without exercising it on a disposable list and checking readback.
+Record new findings in `twos-operator/references/evidence.md` without personal
+paths, account details, or live object IDs.
