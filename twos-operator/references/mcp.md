@@ -11,7 +11,9 @@ Schema-inspected 2026-09-13; the exploration used readback only. **Supported by 
 | Item writes | create_thing(list_id, text, type, tabs, tags, url, completed); update_thing(id, text, type, tabs, tags, url, completed, canceled, favorited, list_id); delete_thing |
 | Reminders | set_reminder, remove_reminder; read current schema for scheduling fields |
 
-No insertion index, reorder, header/bold, note-body, sublist or clone write fields were exposed. Use the UI for those intents. `update_thing(list_id=...)` supports a flat move but does not establish UI-equivalent descendant handling; use UI group selection for branch movement.
+No insertion index, reorder, sublist or clone write fields were exposed. Use the UI for those intents. `update_thing(list_id=...)` supports a flat move but does not establish UI-equivalent descendant handling; use UI group selection for branch movement.
+
+**Formatting fields vary by connector build.** The schema inspected through Codex on 2026-09-13 exposed no `header`, `bold` or `note` write fields; the claude.ai connector inspected on 2026-09-14 exposes `header`, `subheader`, `bold`, `italic`, `underline`, `quote`, `code` and `note` on `create_thing`, `update_thing` and `update_things`. Read the live schema: if the field is present, a formatting-only request is an ordinary field update (send only that field; read back `header`/`bold`, text, type, tabs and ID). If absent, use the UI recipe. Neither path was live write-tested through MCP.
 
 `create_thing`/`update_thing` accepted **note**, while prose and read enums also used **none**. Follow the live callable write schema; do not send an enum copied from a read response. Choose todo for an actual task, dash for explicitly outlined notes; otherwise respect the requested/live default.
 

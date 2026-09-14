@@ -14,7 +14,8 @@ Honor explicit UI, Chrome, MCP, and verification choices. Otherwise:
 | Intent | Preferred route | Read |
 |---|---|---|
 | Search/read; ordinary creation; supported text/type/tag/state updates | MCP when available | [Connector](references/mcp.md) |
-| Reorder; insert between existing items; move a branch; heading/rich formatting | Browser UI | [UI recipes](references/ui.md) |
+| Reorder; insert between existing items; move a branch | Browser UI | [UI recipes](references/ui.md) |
+| Heading/bold/rich formatting | MCP if the live write schema exposes the field (`header`, `bold`, ...); otherwise browser UI | [Connector](references/mcp.md), then [UI recipes](references/ui.md) |
 | Move one flat item to a list, with no placement constraint | MCP; UI if already easier in context | Relevant route above |
 | Shortcut not in a recipe | Account binding reference | [Shortcuts](references/shortcuts.md) |
 | Copy/clone, sublist, day/reminder, sorting or hidden-content semantics | Inspect relevant product rule before acting | [Product semantics](references/semantics.md) |
