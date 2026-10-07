@@ -40,3 +40,12 @@ Selected-group drag, collapsed-parent drag, Shift-click ranges, side-panel focus
 ## Extending the evidence
 
 Use an authorized disposable list, record its live baseline and expected result, then verify IDs, order and fields. Useful cases: move expanded/collapsed branch; insert a middle child; add a tag without removing existing tags; cross-list child vs branch; Undo an accidental split; obey explicit UI-only/MCP-only routing. Measure cold setup separately from repeated action latency. A successful test of one case is not proof of the rest.
+
+## October 7, 2026: composer and rendered-content checks
+
+Tested through Chrome control at twosapp.com on macOS, using synthetic content in a newly created disposable list. These are operating procedures, not workarounds for the separately observed movement defect.
+
+- **Literal hashtags:** With tag suggestions open for `TEST enter hashtag #1`, Enter selected the first suggestion, removed `#1` from the draft, and did not save an item. Saving that draft produced the selected tag. Escape followed by Enter, and Escape followed by the composer Add button, each saved literal `#1` text without a tag. Suggestion names and order are account-specific.
+- **Rendered content:** An eight-item fixture showed six DOM rows after collapsing a parent with two children. Selecting that parent counted three items. Expanding it restored the same eight IDs, sequence, text and indentation. Rendered row counts measure visible content, not complete list membership.
+
+These tests do not establish behavior on other platforms or a connection to rollover Copy or the fixed July Move defect.

@@ -19,6 +19,8 @@ Clicking item **text edits it**. The right-edge circle selects it. In observed A
 
 Type title → Return → inline item editor. Type one item → Return saves and opens the next editor; repeat, then Escape. New items were `dash` in the test account; respect the live default unless a specific type is requested. Return behavior is configurable; if it inserts a newline, inspect the current control rather than blindly repeating. Task/checklist requests need todo type; headings and indentation do not turn a dash into a todo.
 
+**Literal hashtags — tested in Mac Chrome, 2026-10-07.** Typing `#` can open tag autocomplete. While suggestions are open, Enter accepts the highlighted suggestion rather than saving the item. To preserve literal text such as `newsletters to sort #1`, press Escape to dismiss suggestions, then Enter to save. Verify the saved text and tags separately. Escape followed by the composer's Add button also worked; scope that button to the composer because the page can expose multiple Add controls.
+
 ## Reorder and move branches within a list
 
 **Tested fast path:** establish selection → `Cmd+Shift+Option+Up/Down` moves selection to top/bottom. Relative order and tabs are preserved. Nonadjacent selections become a contiguous block; retained tabs may put them under a different parent. Verify actual hierarchy.
@@ -78,6 +80,8 @@ To close: focus search field, Escape clears a nonempty query; Escape again close
 Side-panel/list-opening gestures are recorded in [shortcuts](shortcuts.md), but not exercised. Do not assume a second panel's list is the active keyboard target.
 
 ## Undo and verification
+
+**Collapsed content — tested in Mac Chrome, 2026-10-07.** Browser DOM and accessibility inspection may omit collapsed descendants. Do not treat a lower rendered-row count as evidence of deletion. For preservation checks, expand the affected current-list branches and compare item IDs, text, order and indentation against the baseline. Do not expand linked-list destinations merely to count current-list items. When connector use is permitted, a complete list read can verify membership without changing collapse state. See [test evidence](evidence.md#october-7-2026-composer-and-rendered-content-checks).
 
 **Tested same-session immediate Cmd+Z:** single-item keyboard/drag reorder, nonadjacent reorder, group/single-child cross-list move, heading format, text insertion and split. Inspect each result; no guarantee across reloads, after unrelated work, or for untested actions. Redo is settings-observed only.
 
